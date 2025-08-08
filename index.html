@@ -4,12 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pixel Moss — Bộ sưu tập rêu (Pixel Art)</title>
-
-  <!-- Google Font: Nata Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#F7F3E9;
@@ -22,7 +17,7 @@
     html,body{height:100%}
     body{
       margin:0;padding:28px;background: linear-gradient(180deg,var(--bg), #F1EDE3);
-      font-family: 'Nata Sans', sans-serif; color:var(--text);
+      font-family: 'Press Start 2P', monospace; color:var(--text);
       -webkit-font-smoothing:antialiased;
     }
 
@@ -35,46 +30,45 @@
     }
     .logo .leaf{font-size:42px;color:var(--accent)}
     h1{font-size:20px;margin:0}
-    p.lead{margin:6px 0 0;font-size:13px;opacity:0.95}
+    p.lead{margin:6px 0 0;font-size:10px;opacity:0.9}
 
-    /* GRID (giữ tên .grid theo code JS) */
+    /* grid */
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
 
     .card{
       background:var(--panel);padding:12px;border-radius:6px;border:var(--pixel-border) solid #2b2b2b;
-      box-shadow: 6px 6px 0 rgba(0,0,0,0.06);display:flex;flex-direction:column;gap:12px;align-items:center;
-      transition:transform .12s ease;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.06);display:flex;flex-direction:column;gap:12px;align-items:center
     }
 
-    /* sprite frame (khung vuông, ảnh bị cắt) */
+    /* sprite frame */
     .sprite-frame{
       width:160px;height:160px;display:grid;place-items:center;background:repeating-conic-gradient(#fff 0% 25%, rgba(0,0,0,0.02) 0% 50%);
-      border:4px solid #222;padding:0;position:relative;overflow:hidden;image-rendering:pixelated;
+      border:4px solid #222;padding:10px;position:relative;overflow:hidden;image-rendering:pixelated;
     }
     .sprite-frame img{
       width:100%;
       height:100%;
-      object-fit:cover; /* ảnh bị cắt thành vuông */
+      object-fit:cover;
       image-rendering:pixelated;
       display:block;
     }
 
     .placeholder{
-      width:100%;height:100%;display:grid;place-items:center;color:#666;font-size:12px;text-align:center;padding:6px;
-      background: linear-gradient(180deg,#fbfbfb,#f3f7f3);
+      width:100%;height:100%;display:grid;place-items:center;color:#666;font-size:10px;text-align:center;padding:6px
     }
 
     .meta{display:flex;flex-direction:column;align-items:center;gap:6px}
-    .name{font-size:13px}
-    .desc{font-size:11px;opacity:0.85;text-align:center;padding:0 6px}
+    .name{font-size:10px}
+    .desc{font-size:9px;opacity:0.85;text-align:center}
 
     .controls{display:flex;gap:8px}
-    button{font-family:'Nata Sans',sans-serif;font-size:12px;padding:8px 10px;border-radius:6px;border:3px solid #222;background:#fff;cursor:pointer}
+    button{font-family:'Press Start 2P';font-size:10px;padding:8px 10px;border-radius:6px;border:3px solid #222;background:#fff;cursor:pointer}
     button.upload{background:linear-gradient(180deg,#fff,#f0f0f0)}
     button.remove{background:linear-gradient(180deg,#ffecec,#ffdcdc)}
 
-    footer{margin-top:18px;font-size:12px;opacity:0.9}
+    footer{margin-top:18px;font-size:10px;opacity:0.9}
 
+    /* pixel outline for hover */
     .card:hover{transform:translateY(-4px)}
     @media (max-width:420px){.sprite-frame{width:120px;height:120px}}
   </style>
@@ -94,7 +88,7 @@
         <template id="cardTpl">
           <article class="card">
             <div class="sprite-frame">
-              <div class="placeholder">KHUNG TRỐNG<br>(Click Upload)</div>
+              <div class="placeholder">KHUNG TRỐNG\n(Click Upload)</div>
               <img alt="" style="display:none" />
             </div>
             <div class="meta">
@@ -110,12 +104,14 @@
             </div>
           </article>
         </template>
+
       </div>
 
       <div style="margin-top:12px;">
         <button id="addCard">Thêm khung rỗng</button>
         <button id="downloadHTML">Tải HTML hiện tại</button>
       </div>
+
     </main>
 
     <footer>
@@ -151,7 +147,6 @@
       grid.appendChild(node);
     }
 
-    // tạo 8 khung mặc định
     for(let i=0;i<8;i++) makeCard();
 
     document.getElementById('addCard').addEventListener('click', (e)=>{ e.preventDefault(); makeCard(); });
