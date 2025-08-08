@@ -1,65 +1,170 @@
 <!doctype html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Moss Gallery</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pixel Moss — Bộ sưu tập rêu (Pixel Art)</title>
 
-    <!-- Google Font: Nata Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&display=swap" rel="stylesheet">
+  <!-- Google Font: Nata Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&display=swap" rel="stylesheet">
 
-    <style>
-        body, button, input, .placeholder, .meta, footer {
-            font-family: 'Nata Sans', sans-serif;
-        }
+  <style>
+    :root{
+      --bg:#F7F3E9;
+      --panel:#E7E0D4;
+      --accent:#7FB069;
+      --text:#111;
+      --pixel-border:6px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;padding:28px;background: linear-gradient(180deg,var(--bg), #F1EDE3);
+      font-family: 'Nata Sans', sans-serif; color:var(--text);
+      -webkit-font-smoothing:antialiased;
+    }
 
-        body {
-            margin: 0;
-            background-color: #f0f0f0;
-            text-align: center;
-        }
+    .wrap{max-width:1100px;margin:0 auto}
+    header{display:flex;align-items:center;gap:18px;margin-bottom:18px}
+    .logo{
+      width:86px;height:86px;background:repeating-linear-gradient(45deg,#fff 0 6px, #e9f6e9 6px 12px);
+      border:var(--pixel-border) solid #2b2b2b;padding:8px;display:grid;place-items:center;border-radius:8px;
+      box-shadow: 8px 8px 0 rgba(0,0,0,0.12);
+    }
+    .logo .leaf{font-size:42px;color:var(--accent)}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:6px 0 0;font-size:13px;opacity:0.95}
 
-        h1 {
-            font-weight: 700;
-            margin-top: 20px;
-        }
+    /* GRID (giữ tên .grid theo code JS) */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-            padding: 20px;
-        }
+    .card{
+      background:var(--panel);padding:12px;border-radius:6px;border:var(--pixel-border) solid #2b2b2b;
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.06);display:flex;flex-direction:column;gap:12px;align-items:center;
+      transition:transform .12s ease;
+    }
 
-        .gallery-item {
-            background-color: #fff;
-            border: 2px solid #ccc;
-            padding: 10px;
-            box-shadow: 3px 3px 0px #999;
-        }
+    /* sprite frame (khung vuông, ảnh bị cắt) */
+    .sprite-frame{
+      width:160px;height:160px;display:grid;place-items:center;background:repeating-conic-gradient(#fff 0% 25%, rgba(0,0,0,0.02) 0% 50%);
+      border:4px solid #222;padding:0;position:relative;overflow:hidden;image-rendering:pixelated;
+    }
+    .sprite-frame img{
+      width:100%;
+      height:100%;
+      object-fit:cover; /* ảnh bị cắt thành vuông */
+      image-rendering:pixelated;
+      display:block;
+    }
 
-        .gallery-item img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
+    .placeholder{
+      width:100%;height:100%;display:grid;place-items:center;color:#666;font-size:12px;text-align:center;padding:6px;
+      background: linear-gradient(180deg,#fbfbfb,#f3f7f3);
+    }
 
-        .placeholder {
-            display: grid;
-            place-items: center;
-            background-color: #eaeaea;
-            color: #666;
-            font-size: 14px;
-            text-align: center;
-            padding: 5px;
-            height: 150px;
-        }
+    .meta{display:flex;flex-direction:column;align-items:center;gap:6px}
+    .name{font-size:13px}
+    .desc{font-size:11px;opacity:0.85;text-align:center;padding:0 6px}
 
-        .meta {
-            font-size: 14px;
-            margin-top: 5px;
-        }
+    .controls{display:flex;gap:8px}
+    button{font-family:'Nata Sans',sans-serif;font-size:12px;padding:8px 10px;border-radius:6px;border:3px solid #222;background:#fff;cursor:pointer}
+    button.upload{background:linear-gradient(180deg,#fff,#f0f0f0)}
+    button.remove{background:linear-gradient(180deg,#ffecec,#ffdcdc)}
 
-        button {
+    footer{margin-top:18px;font-size:12px;opacity:0.9}
+
+    .card:hover{transform:translateY(-4px)}
+    @media (max-width:420px){.sprite-frame{width:120px;height:120px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo"><div class="leaf">🌿</div></div>
+      <div>
+        <h1>Pixel Moss — Bộ sưu tập rêu</h1>
+        <p class="lead">Giao diện pixel-art để trưng bày ảnh rêu. Nhấn "Upload" để thêm ảnh vào khung.</p>
+      </div>
+    </header>
+
+    <main>
+      <div class="grid" id="grid">
+        <template id="cardTpl">
+          <article class="card">
+            <div class="sprite-frame">
+              <div class="placeholder">KHUNG TRỐNG<br>(Click Upload)</div>
+              <img alt="" style="display:none" />
+            </div>
+            <div class="meta">
+              <div class="name">Tên rêu</div>
+              <div class="desc">Mô tả ngắn về loài, môi trường sống, hoặc ghi chú pixel.</div>
+            </div>
+            <div class="controls">
+              <label>
+                <input type="file" accept="image/*" style="display:none" class="fileinput">
+                <button class="upload">Upload</button>
+              </label>
+              <button class="remove">Remove</button>
+            </div>
+          </article>
+        </template>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button id="addCard">Thêm khung rỗng</button>
+        <button id="downloadHTML">Tải HTML hiện tại</button>
+      </div>
+    </main>
+
+    <footer>
+      Lưu ý: trang này là tĩnh. Bạn có thể lưu file này dưới dạng <code>index.html</code> và mở bằng trình duyệt.
+    </footer>
+  </div>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const tpl = document.getElementById('cardTpl');
+
+    function makeCard(){
+      const node = tpl.content.cloneNode(true);
+      const input = node.querySelector('.fileinput');
+      const img = node.querySelector('img');
+      const placeholder = node.querySelector('.placeholder');
+      const removeBtn = node.querySelector('.remove');
+      const uploadBtn = node.querySelector('.upload');
+
+      input.addEventListener('change', e=>{
+        const f = e.target.files[0];
+        if(!f) return;
+        const url = URL.createObjectURL(f);
+        img.src = url; img.style.display = 'block'; placeholder.style.display = 'none';
+      });
+
+      uploadBtn.addEventListener('click', (ev)=>{ ev.preventDefault(); input.click(); });
+
+      removeBtn.addEventListener('click', ()=>{
+        img.src=''; img.style.display='none'; placeholder.style.display='grid'; input.value='';
+      });
+
+      grid.appendChild(node);
+    }
+
+    // tạo 8 khung mặc định
+    for(let i=0;i<8;i++) makeCard();
+
+    document.getElementById('addCard').addEventListener('click', (e)=>{ e.preventDefault(); makeCard(); });
+
+    document.getElementById('downloadHTML').addEventListener('click', ()=>{
+      const doctype = '<!doctype html>';
+      const full = doctype + '\n' + document.documentElement.outerHTML;
+      const blob = new Blob([full], {type:'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'pixel-moss-gallery.html';
+      a.click();
+    });
+  </script>
+</body>
+</html>
