@@ -11,8 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&display=swap" rel="stylesheet">
 
     <style>
-        body {
+        body, button, input, .placeholder, .meta, footer {
             font-family: 'Nata Sans', sans-serif;
+        }
+
+        body {
             margin: 0;
             background-color: #f0f0f0;
             text-align: center;
@@ -42,95 +45,21 @@
             height: 150px;
             object-fit: cover;
         }
-    </style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <div class="logo"><div class="leaf">🌿</div></div>
-      <div>
-        <h1>Pixel Moss — Bộ sưu tập rêu</h1>
-        <p class="lead">Giao diện pixel-art để trưng bày ảnh rêu. Nhấn "Upload" để thêm ảnh vào khung.</p>
-      </div>
-    </header>
 
-    <main>
-      <div class="grid" id="grid">
-        <template id="cardTpl">
-          <article class="card">
-            <div class="sprite-frame">
-              <div class="placeholder">KHUNG TRỐNG\n(Click Upload)</div>
-              <img alt="" style="display:none" />
-            </div>
-            <div class="meta">
-              <div class="name">Tên rêu</div>
-              <div class="desc">Mô tả ngắn về loài, môi trường sống, hoặc ghi chú pixel.</div>
-            </div>
-            <div class="controls">
-              <label>
-                <input type="file" accept="image/*" style="display:none" class="fileinput">
-                <button class="upload">Upload</button>
-              </label>
-              <button class="remove">Remove</button>
-            </div>
-          </article>
-        </template>
+        .placeholder {
+            display: grid;
+            place-items: center;
+            background-color: #eaeaea;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+            padding: 5px;
+            height: 150px;
+        }
 
-      </div>
+        .meta {
+            font-size: 14px;
+            margin-top: 5px;
+        }
 
-      <div style="margin-top:12px;">
-        <button id="addCard">Thêm khung rỗng</button>
-        <button id="downloadHTML">Tải HTML hiện tại</button>
-      </div>
-
-    </main>
-
-    <footer>
-      Lưu ý: trang này là tĩnh. Bạn có thể lưu file này dưới dạng <code>index.html</code> và mở bằng trình duyệt.
-    </footer>
-  </div>
-
-  <script>
-    const grid = document.getElementById('grid');
-    const tpl = document.getElementById('cardTpl');
-
-    function makeCard(){
-      const node = tpl.content.cloneNode(true);
-      const input = node.querySelector('.fileinput');
-      const img = node.querySelector('img');
-      const placeholder = node.querySelector('.placeholder');
-      const removeBtn = node.querySelector('.remove');
-      const uploadBtn = node.querySelector('.upload');
-
-      input.addEventListener('change', e=>{
-        const f = e.target.files[0];
-        if(!f) return;
-        const url = URL.createObjectURL(f);
-        img.src = url; img.style.display = 'block'; placeholder.style.display = 'none';
-      });
-
-      uploadBtn.addEventListener('click', (ev)=>{ ev.preventDefault(); input.click(); });
-
-      removeBtn.addEventListener('click', ()=>{
-        img.src=''; img.style.display='none'; placeholder.style.display='grid'; input.value='';
-      });
-
-      grid.appendChild(node);
-    }
-
-    for(let i=0;i<8;i++) makeCard();
-
-    document.getElementById('addCard').addEventListener('click', (e)=>{ e.preventDefault(); makeCard(); });
-
-    document.getElementById('downloadHTML').addEventListener('click', ()=>{
-      const doctype = '<!doctype html>';
-      const full = doctype + '\n' + document.documentElement.outerHTML;
-      const blob = new Blob([full], {type:'text/html'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'pixel-moss-gallery.html';
-      a.click();
-    });
-  </script>
-</body>
-</html>
+        button {
